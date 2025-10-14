@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Icon } from '@iconify/vue'
 
 defineProps<{ msg: string }>()
 
@@ -12,7 +13,8 @@ const count = ref(0)
 
     <div class="card flex flex-col items-center justify-center">
       <button type="button" class="bg-blue-500 text-white p-2 rounded-md" @click="count++">count is {{ count }}</button>
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-gray-500 flex items-center gap-2">
+        <Icon icon="mdi:pencil" />
         Edit
         <code>components/HelloWorld.vue</code> to test HMR
       </p>
