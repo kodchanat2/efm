@@ -10,6 +10,7 @@ const count = ref(0)
 <template>
   <div class="flex flex-col items-center justify-center">
     <h1>{{ msg }}</h1>
+    <p>{{ $t('hello') }}</p>
 
     <div class="card flex flex-col items-center justify-center">
       <button type="button" class="bg-blue-500 text-white p-2 rounded-md" @click="count++">count is {{ count }}</button>
