@@ -1,9 +1,15 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import LandingPage from './LandingPage.vue';
 import BuilderPage from './BuilderPage.vue';
 import FormPage from './FormPage.vue';
 import NotFoundPage from './NotFoundPage.vue';
 
 const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    name: 'Landing',
+    component: LandingPage,
+  },
   {
     path: '/builder/:id?',
     name: 'builder',

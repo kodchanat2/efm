@@ -1,3 +1,12 @@
 {
-  "hello": "Hello"
+  "hello": "Hello",
+  "landing": {
+    "title": "Easy Form Maker",
+    "subtitle": "Create, Save, Share, no login required.",
+    "feature": {
+      "newForm": { "title": "Create New Form", "desc": "Create a new form from scratch." },
+      "import": { "title": "Import from JSON", "desc": "Load a form from a JSON file." },
+      "recent": { "title": "Recent Forms", "desc": "Open a recently edited form.", "empty": "No recent forms" }
+    }
+  }
 }
