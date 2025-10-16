@@ -1,4 +1,4 @@
-import type { Schema } from "@/types";
+import type { FieldItem, Schema } from "@/types";
 import { defineStore } from "pinia";
 
 export const useBuilderStore = defineStore('builder', {
@@ -9,10 +9,12 @@ export const useBuilderStore = defineStore('builder', {
   getters: {
     hasUnsavedChanges: (state) => {
       return JSON.stringify(state.schema) !== JSON.stringify(state.oldSchema);
-    }
+    },
+    items: (state) => state.schema?.items || [],
   },
   actions: {
     loadSchema(id?: string) {
+      console.log('init');
       if(id) { // Fetch from backend
 
       } else { // Initialize new schema
@@ -20,7 +22,16 @@ export const useBuilderStore = defineStore('builder', {
       }
     },
     updateMeta(key: keyof Schema, value: any) {
-      this.schema![key] = value
+      if (!this.schema) return;
+      this.schema[key] = value
     },
+    addItem(item: FieldItem) {
+      if (!this.schema) return;
+      this.schema.items.push(item);
+    },
+    saveSchema() {
+      this.oldSchema = JSON.parse(JSON.stringify(this.schema));
+      console.log(this.oldSchema);
+    }
   }
 });

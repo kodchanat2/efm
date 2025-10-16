@@ -10,11 +10,15 @@ import {
 import type { BuilderItem } from "@/types";
 import { Icon } from "@iconify/vue";
 import { BUILDER_ITEMS } from "@/constants/items";
+import { useBuilderStore } from "@/stores/builder";
+import { builderToField, generateFieldName } from "@/lib/utils";
 
+const $builder = useBuilderStore();
 
 function selectItem(item: BuilderItem) {
-  // emit("select", item)
-  console.log(item);
+  const fieldName = generateFieldName([...$builder.items], item.props.type);
+  const fieldItem = builderToField(item, fieldName);
+  $builder.addItem(fieldItem);
 }
 </script>
 

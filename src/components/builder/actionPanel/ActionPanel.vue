@@ -30,9 +30,9 @@ const $builder = useBuilderStore();
         <span class="hidden sm:inline">{{ $t('builder.actionPanel.share') }}</span>
       </Button>
       <Separator orientation="vertical" class="bg-muted-foreground" />
-      <Button :disabled="!$builder.hasUnsavedChanges">
+      <Button type="button" :disabled="!$builder.hasUnsavedChanges" @click="$builder.saveSchema">
         <Icon icon="ic:baseline-save" />
-        {{ $t('builder.actionPanel.save') }}
+        {{ $t('builder.actionPanel.create') }}
       </Button>
     </div>
 
