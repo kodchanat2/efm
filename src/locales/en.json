@@ -23,6 +23,11 @@
       "share": "Share",
       "create": "Create",
       "save": "Save"
+    },
+    "item": {
+      "simple_input": "Text Input",
+      "simple_choice": "Choice Question",
+      "simple_select": "Dropdown Question"
     }
   },
   "placeholder": {

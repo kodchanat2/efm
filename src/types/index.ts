@@ -1,3 +1,5 @@
+import type { BuilderType } from "@/constants/items"
+
 export type Schema = {
   id?: string
   label?: string
@@ -9,12 +11,12 @@ export type Schema = {
 export type FieldItem = {
   label?: string
   name: string
-  type: string
+  type: FieldType
   description?: string
   placeholder?: string
   rules?: string[]
   builder: {
-    type: string
+    type: BuilderType
   }
   layout: string
   props?: any
@@ -23,13 +25,11 @@ export type FieldItem = {
   enable?: [string, string, string][]
 }
 
+export type FieldType = "Text" | "Number" | "Email" | "Password" | "Textarea" | "Select" | "Radio" | "Checkbox" | "Date" | "Time" | "File" | "Color" | "Range" | "Switch" | "Rating" | "Slider"
+
 export type BuilderItem = {
-  name: string
-  type: string
+  type: BuilderType
   icon?: string
   img?: string
-  props?: Partial<{
-    type: "input"
-    layout: "Normal"
-  }>
+  props: Partial<FieldItem> & { type: FieldType }
 }

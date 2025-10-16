@@ -9,13 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import type { BuilderItem } from "@/types";
 import { Icon } from "@iconify/vue";
-
-import { ref } from "vue"
-
-const items = ref<BuilderItem[]>([
-  { name: "Text", type: "text", icon: "streamline-sharp-color:input-box"},
-  { name: "Select", type: "select", icon: "streamline-plump-color:drop-down-menu-flat"},
-])
+import { BUILDER_ITEMS } from "@/constants/items";
 
 
 function selectItem(item: BuilderItem) {
@@ -38,12 +32,12 @@ function selectItem(item: BuilderItem) {
       </DialogHeader>
       <div class="grid gap-4 py-4 overflow-y-auto px-6">
         <div class="grid grid-cols-2 gap-4">
-          <template v-for="item in items" :key="item.type">
+          <template v-for="item in BUILDER_ITEMS" :key="item.type">
             <div class="flex flex-col items-center gap-2 p-4 rounded-lg bg-secondary/10 hover:bg-secondary/30 transition-all hover:shadow cursor-pointer" @click="selectItem(item)">
               <div class="size-16 flex items-center justify-center">
                 <Icon v-if="item.icon" :icon="item.icon!" class="text-7xl" />
               </div>
-              <span class="font-medium">{{ item.name }}</span>
+              <span class="font-medium">{{ $t(`builder.item.${item.type}`) }}</span>
             </div>
           </template>
         </div>
