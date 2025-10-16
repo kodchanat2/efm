@@ -33,6 +33,8 @@
   "placeholder": {
     "meta": {
       "label":"Untitled Form"
-    }
+    },
+    "question": "please enter your question",
+    "text": ""
   }
 }
