@@ -87,3 +87,7 @@
     @apply flex items-center justify-center;
   }
 }
+
+.input-header {
+  @apply rounded-b-none border-0 border-b font-medium ring-0!;
+}

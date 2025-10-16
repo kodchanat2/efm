@@ -21,9 +21,9 @@ export const useBuilderStore = defineStore('builder', {
         this.schema = { items: [] };
       }
     },
-    updateMeta(key: keyof Schema, value: any) {
+    updateMeta(value: any) {
       if (!this.schema) return;
-      this.schema[key] = value
+      this.schema = { ...this.schema, ...value }
     },
     addItem(item: FieldItem) {
       if (!this.schema) return;

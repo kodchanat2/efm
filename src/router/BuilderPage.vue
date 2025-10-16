@@ -26,27 +26,30 @@ const form = useForm({
 })
 
 const onChange = () => {
-  console.log('Form changed!', form.values)
+  // console.log('Form changed!', form.values)
+  $builder.updateMeta(form.values)
 }
 
 </script>
 
 <template>
-  <form @change="onChange" @input="onChange" class="px-4 py-10 max-w-2xl mx-auto flex flex-col gap-4">
-    <FormField v-slot="{ componentField }" name="label">
-      <FormItem v-auto-animate>
-        <FormControl>
-          <Input 
-            type="text" 
-            class="rounded-b-none border-0 border-b text-2xl! font-medium ring-0!" 
-            :placeholder="$t('placeholder.meta.label')" 
-            v-bind="componentField" 
-          />
-        </FormControl>
-        <FormMessage />
-      </FormItem>
-    </FormField>
+  <div class="px-4 py-10 max-w-2xl mx-auto flex flex-col gap-4">
+    <form @change="onChange" @input="onChange">
+      <FormField v-slot="{ componentField }" name="label">
+        <FormItem v-auto-animate>
+          <FormControl>
+            <Input 
+              type="text" 
+              class="input-header text-2xl!" 
+              :placeholder="$t('placeholder.meta.label')" 
+              v-bind="componentField" 
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+    </form>
 
     <ActionPanel />
-  </form>
+  </div>
 </template>
