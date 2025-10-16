@@ -10,6 +10,16 @@
     }
   }
   ,
+  "builder": {
+    "actionPanel": {
+      "add": {
+        "button": "Add",
+      "export": "Export",
+      "share": "Share",
+      "create": "Create",
+      "save": "Save"
+    }
+  },
   "placeholder": {
     "meta": {
       "label":"Untitled Form"

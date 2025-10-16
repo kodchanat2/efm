@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ActionPanel } from '@/components/builder/actionPanel'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { toTypedSchema } from '@vee-validate/zod'
@@ -45,5 +46,7 @@ const onChange = () => {
         <FormMessage />
       </FormItem>
     </FormField>
+
+    <ActionPanel />
   </form>
 </template>
