@@ -9,4 +9,10 @@
       "recent": { "title": "Recent Forms", "desc": "Open a recently edited form.", "empty": "No recent forms" }
     }
   }
+  ,
+  "placeholder": {
+    "meta": {
+      "label":"Untitled Form"
+    }
+  }
 }
