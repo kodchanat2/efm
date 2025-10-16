@@ -22,3 +22,14 @@ export type FieldItem = {
   visible?: [string, string, string][]
   enable?: [string, string, string][]
 }
+
+export type BuilderItem = {
+  name: string
+  type: string
+  icon?: string
+  img?: string
+  props?: Partial<{
+    type: "input"
+    layout: "Normal"
+  }>
+}

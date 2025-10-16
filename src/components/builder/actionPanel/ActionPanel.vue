@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AddModal from './AddModal.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useBuilderStore } from '@/stores/builder';
@@ -10,10 +11,12 @@ const $builder = useBuilderStore();
 <template>
   <div class="fixed bottom-0 sm:bottom-4 left-0 right-0 z-10 sm:w-fit mx-auto p-2 flex justify-between gap-2 sm:rounded-lg shadow-md backdrop-blur-2xl bg-secondary/10">
     <div class="flex items-center gap-2">
+      <AddModal>
         <Button variant="outline">
           <Icon icon="ic:outline-add-box" />
           {{ $t('builder.actionPanel.add.button') }}
         </Button>
+      </AddModal>
     </div>
 
     <div class="flex items-center gap-2">

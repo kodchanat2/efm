@@ -14,6 +14,11 @@
     "actionPanel": {
       "add": {
         "button": "Add",
+        "modal": {
+          "title": "Add New Item",
+          "description": "Select the type of item you want to add."
+        }
+      },
       "export": "Export",
       "share": "Share",
       "create": "Create",
