@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue';
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
+import { useRoute } from 'vue-router'
+import { useBuilderStore } from '@/stores/builder'
+import { onMounted } from 'vue'
+
+const route = useRoute()
+const $builder = useBuilderStore()
+
 const formSchema = toTypedSchema(z.object({
   label: z.string().max(50),
 }))
+
+onMounted(() => {
+  const id = route.params.id
+  $builder.loadSchema(typeof id === 'string' ? id : undefined)
+})
+
 const form = useForm({
   validationSchema: formSchema,
 })
