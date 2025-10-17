@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useFirestore } from '@/composables/useFirestore'
+import type { Schema } from './types';
+import { onMounted } from 'vue';
+
+const { loading, error, getAll } = useFirestore<Schema>('forms')
+onMounted(() => {
+  getAll()
+})
+
 </script>
 
 <template>
@@ -17,6 +26,13 @@ import { RouterLink, RouterView } from 'vue-router'
       </RouterLink>
     </template>
     </nav> -->
-    <RouterView/>
+    <div v-if="loading">
+      {{ $t('common.loading') }}
+    </div>
+    <!-- Error State -->
+    <div v-else-if="error" class="text-destructive mb-4">
+      {{ error.message }}
+    </div>
+    <RouterView v-else/>
   </div>
 </template>

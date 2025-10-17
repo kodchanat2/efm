@@ -1,5 +1,8 @@
+import { useFirestore } from "@/composables/useFirestore";
 import type { FieldItem, Schema } from "@/types";
 import { defineStore } from "pinia";
+import { toast } from "vue3-toastify";
+const $db = useFirestore<Schema>('forms')
 
 export const useBuilderStore = defineStore('builder', {
   state: () => ({
@@ -14,12 +17,13 @@ export const useBuilderStore = defineStore('builder', {
     items: (state) => state.schema?.items || [],
   },
   actions: {
-    loadSchema(id?: string) {
+    loadSchema(data?: Schema) {
       console.log('init');
-      if(id) { // Fetch from backend
+      if(data?.id) { // Fetch from backend
         this.saved = true;
-      } else if (window.history.state.schema) {
-          this.schema = JSON.parse(window.history.state.schema);
+      }
+      if (data) {
+          this.schema = data;
       } else { // Initialize new schema
         this.schema = { items: [] };
       }
@@ -45,10 +49,23 @@ export const useBuilderStore = defineStore('builder', {
       this.schema.items = items;
       console.log(this.schema.items);
     },
-    saveSchema() {
+    async saveSchema() {
+      if (!this.schema) return;
+      const toastId = toast.loading('saving...');
+      // console.log(this.oldSchema);
+      if(this.schema?.id) {
+        // Update existing
+        await $db.update(this.schema.id, this.schema);
+      } else {
+        // Create new
+        const id = await $db.create(this.schema);
+        this.schema.id = id;
+      }
       this.oldSchema = JSON.parse(JSON.stringify(this.schema));
+      window.history.replaceState({ schema: JSON.stringify(this.schema) }, '', '/builder/' + this.schema.id);
       this.saved = true;
-      console.log(this.oldSchema);
+      await $db.getAll();
+      toast.update(toastId, { render: 'Saved!', type: 'success', isLoading: false, autoClose: 1000 });
     }
   }
 });

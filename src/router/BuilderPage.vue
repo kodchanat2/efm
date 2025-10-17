@@ -5,16 +5,19 @@ import { Input } from '@/components/ui/input'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useBuilderStore } from '@/stores/builder'
 import { computed, onMounted, watch } from 'vue'
-import type { FieldItem } from '@/types'
+import type { FieldItem, Schema } from '@/types'
 import { BUILDER_ITEMS } from '@/constants/items'
 import { generateFieldName } from '@/lib/utils'
 import draggable from "vuedraggable";
+import { useFirestore } from '@/composables/useFirestore'
 
 const route = useRoute()
+const router = useRouter()
 const $builder = useBuilderStore()
+const $db = useFirestore<Schema>('forms')
 const formSchema = toTypedSchema(z.object({
   label: z.string().max(50),
 }))
@@ -28,7 +31,22 @@ const list = computed({
 
 onMounted(() => {
   const id = route.params.id
-  $builder.loadSchema(typeof id === 'string' ? id : undefined)
+  if(id) {
+    $db.getAll().then((data) => { // Ensure data is loaded
+      console.log(data);
+      const form = data.find(f => f.id === id)
+      if (!form) {
+        console.error('Form not found')
+        router.push({ name: 'builder' })
+        return
+      }
+      $builder.loadSchema(form)
+    })
+  } else if (window.history.state.schema) {
+    $builder.loadSchema(JSON.parse(window.history.state.schema))
+  } else {
+    $builder.loadSchema()
+  }
 })
 
 watch(

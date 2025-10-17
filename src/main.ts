@@ -13,7 +13,7 @@ import 'vue-json-pretty/lib/styles.css';
 const toastifyOptions: ToastContainerOptions = {
   // type: "default",
   // position: "top-right",
-  theme: "auto",
+  theme: "light",
   pauseOnFocusLoss: false,
   dangerouslyHTMLString: true
 };

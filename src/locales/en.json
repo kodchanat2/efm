@@ -53,6 +53,8 @@
     "share": "Share",
     "create": "Create",
     "save": "Save",
+    "saved": "Saved!",
+    "saving": "Saving...",
     "loading": "Loading..."
   }
 }
