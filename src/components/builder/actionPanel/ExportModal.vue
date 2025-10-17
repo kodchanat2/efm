@@ -12,7 +12,7 @@ import { useBuilderStore } from "@/stores/builder";
 import { useClipboard } from "@vueuse/core";
 
 const $builder = useBuilderStore();
-const { text, copy, copied, isSupported } = useClipboard({ source: JSON.stringify($builder.schema) });
+const { copy, copied, isSupported } = useClipboard({ source: JSON.stringify($builder.schema) });
 </script>
 
 <template>

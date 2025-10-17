@@ -8,9 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { Button } from "@/components/ui/button";
-import type { Schema } from "@/types";
 import { Input } from "@/components/ui/input";
 import { useClipboard } from "@vueuse/core";
 import { useRoute } from "vue-router";
@@ -20,7 +19,7 @@ const source = computed(() => {
   return window.location.origin + '/form/' + ($route.params.id as string);
 });
 
-const { text, copy, copied, isSupported } = useClipboard({ source });
+const { copy, copied } = useClipboard({ source });
 
 </script>
 

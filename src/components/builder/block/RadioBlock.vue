@@ -13,9 +13,9 @@ const emit = defineEmits<{
   delete: []
 }>()
 
-function onInput(key: string, value: any) {
-  emit('update', { [key]: value })
-}
+// function onInput(key: string, value: any) {
+//   emit('update', { [key]: value })
+// }
 
 function changeOption(index: number, key: string, value: any) {
   const options = [...(props.props.options || [])];

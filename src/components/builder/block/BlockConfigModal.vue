@@ -26,10 +26,10 @@ const { open, props } = defineProps({
     required: true,
   },
 });
-const emit = defineEmits({
-  "update:open": (value: boolean) => true,
-  "update": (value: { [key: string]: any }) => true
-});
+const emit = defineEmits<{
+  (e: "update:open", value: boolean): void;
+  (e: "update", value: { [key: string]: any }): void;
+}>();
 const name = ref(props.name);
 const rules = BUILDER_ITEMS.find(item => item.type === props.builder.type)?.rules || [];
 const condKeys = ['visible'] as Partial<keyof FieldItem>[];
