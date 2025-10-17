@@ -18,6 +18,8 @@ export const useBuilderStore = defineStore('builder', {
       console.log('init');
       if(id) { // Fetch from backend
         this.saved = true;
+      } else if (window.history.state.schema) {
+          this.schema = JSON.parse(window.history.state.schema);
       } else { // Initialize new schema
         this.schema = { items: [] };
       }

@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@iconify/vue'
+import ImportModal from '@/components/landing/ImportModal.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -19,11 +20,6 @@ try {
 }
 
 function createNewForm() {
-  router.push({ name: 'builder' })
-}
-
-function importFromJSON() {
-  // Placeholder route; implement later if needed
   router.push({ name: 'builder' })
 }
 
@@ -45,10 +41,12 @@ function openForm(f: { id: number }) {
         {{ t('landing.feature.newForm.title') }}
       </Button>
 
-      <Button @click="importFromJSON" size="lg" variant="link" class="cursor-pointer mx-auto text-md">
-        <Icon icon="wpf:create-new" />
-        {{ t('landing.feature.import.title') }}
-      </Button>
+      <ImportModal>
+        <Button size="lg" variant="link" class="cursor-pointer mx-auto text-md">
+          <Icon icon="wpf:create-new" />
+          {{ t('landing.feature.import.title') }}
+        </Button>
+      </ImportModal>
 
       <div class="border-b border-primary py-4 w-full">
         <h3 class="text-lg font-medium">{{ t('landing.feature.recent.title') }}</h3>
