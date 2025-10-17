@@ -11,6 +11,10 @@ const simple_input: BuilderItem = {
   props: {
     type: "Text",
   },
+  rules: [
+    { key: 'minlen', props: {type: 'number', min: 0} },
+    { key: 'maxlen', props: {type: 'number', min: 1} },
+  ]
 };
 
 const simple_choice: BuilderItem = {
@@ -20,6 +24,7 @@ const simple_choice: BuilderItem = {
   props: {
     type: "Radio",
   },
+  rules: []
 };
 
 const simple_select: BuilderItem = {
@@ -29,6 +34,7 @@ const simple_select: BuilderItem = {
   props: {
     type: "Select",
   },
+  rules: []
 };
 
 export const BUILDER_ITEMS: BuilderItem[] = [

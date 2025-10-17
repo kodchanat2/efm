@@ -34,5 +34,13 @@ export type BuilderItem = {
   icon?: string
   img?: string
   component: any
+  rules: RuleSetting[]
   props: Partial<FieldItem> & { type: FieldType }
+}
+
+export type RuleSetting = {
+  key: string
+  props: {
+    [key: string]: any
+  }
 }

@@ -30,6 +30,8 @@
       "rules": "Validation Rules",
       "min": "Minimum",
       "max": "Maximum",
+      "minlen": "min length",
+      "maxlen": "max length",
       "visible": "Visible condition",
       "enable": "Enable condition",
       "field": "select field",

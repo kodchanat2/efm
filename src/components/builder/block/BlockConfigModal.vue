@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog"
 import type { FieldItem } from "@/types";
 import { Icon } from "@iconify/vue";
-import { CONDS } from "@/constants/items";
+import { BUILDER_ITEMS, CONDS } from "@/constants/items";
 import { useBuilderStore } from "@/stores/builder";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,13 +24,14 @@ const { open, props } = defineProps({
   props: {
     type: Object as () => FieldItem,
     required: true,
-  }
+  },
 });
 const emit = defineEmits({
   "update:open": (value: boolean) => true,
   "update": (value: { [key: string]: any }) => true
 });
 const name = ref(props.name);
+const rules = BUILDER_ITEMS.find(item => item.type === props.builder.type)?.rules || [];
 const condKeys = ['visible'] as Partial<keyof FieldItem>[];
 const fields = computed(() => {
   return $builder.items.filter(item => item.name !== props.name).map(item => item.name);
@@ -69,16 +70,26 @@ function setCond(key: typeof condKeys[number], del?: boolean) {
           </div>
 
            <!-- rules config (minLength, maxLength) -->
+           <Label class="-mb-2">{{ $t('builder.settings.rules') }}</Label>
            <div class="grid grid-cols-4 gap-2">
-            <Label class="-mb-2 col-span-2">{{ $t('builder.settings.rules') }}</Label>
+            <template v-for="rule in rules" :key="rule.key">
               <div class="flex flex-col gap-1">
+                <Label :for="rule.key" class="font-normal text-xs">{{ $t(`builder.settings.${rule.key}`) }}</Label>
+                <Input 
+                  :id="rule.key" 
+                  v-model="props.rules[rule.key]"
+                  v-bind="rule.props"
+                />
+              </div>
+            </template>
+              <!-- <div class="flex flex-col gap-1">
                 <Label for="minLength" class="font-normal">{{ $t('builder.settings.min') }}</Label>
                 <Input type="number" id="minLength" v-model="props.rules.min" min="0" />
               </div>
               <div class="flex flex-col gap-1">
                 <Label for="maxLength" class="font-normal">{{ $t('builder.settings.max') }}</Label>
                 <Input type="number" id="maxLength" v-model="props.rules.max" min="1" />
-              </div>
+              </div> -->
             </div>
             <!-- visible condition logic -->
              <!-- enable conditional logic -->

@@ -43,11 +43,11 @@ export function generateValidateSchema(items: FieldItem[]) {
     else {
       rules = rules.min(1);
     }
-    if (item.rules.min) {
-      rules = rules.min(item.rules.min);
+    if (item.rules.minlen) {
+      rules = rules.min(item.rules.minlen);
     }
-    if (item.rules.max) {
-      rules = rules.max(item.rules.max);
+    if (item.rules.maxlen) {
+      rules = rules.max(item.rules.maxlen);
     }
     shape[item.name] = rules;
   });
