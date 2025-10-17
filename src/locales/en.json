@@ -59,6 +59,7 @@
     "save": "Save",
     "saved": "Saved!",
     "saving": "Saving...",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "submit": "Submit"
   }
 }

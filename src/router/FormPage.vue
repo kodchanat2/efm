@@ -1,9 +1,96 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue';
+import { toTypedSchema } from '@vee-validate/zod'
+import { Form, useForm } from 'vee-validate'
+import * as z from 'zod'
+import { useRoute, useRouter } from 'vue-router'
+import { onMounted, watch, computed, ref } from 'vue'
+import type { FieldItem, Schema } from '@/types'
+import { FORM_ITEMS } from '@/constants/items'
+import { useFirestore } from '@/composables/useFirestore'
+import { useFormStore } from '@/stores/form'
+import { Button } from '@/components/ui/button'
+import { generateValidateSchema } from '@/lib/utils'
+
+const route = useRoute()
+const router = useRouter()
+const form = useForm()
+const validationSchema = ref<any>(null)
+const $form = useFormStore()
+const $db = useFirestore<Schema>('forms')
+
+onMounted(() => {
+  const id = route.params.id
+  if(id) {
+    $db.getAll().then((data) => { // Ensure data is loaded
+      const scm = data.find(f => f.id === id)
+      if (!scm) {
+        console.error('Form not found')
+        router.push({ name: 'NotFound' })
+        return
+      }
+      $form.loadSchema(scm)
+      validationSchema.value = toTypedSchema(generateValidateSchema(scm.items))
+    })
+  } else {
+    router.push({ name: 'NotFound' })
+  }
+})
+
+const onChange = () => {
+  // console.log('Form changed!', form.values)
+  // $builder.updateMeta(form.values)
+}
+const getComponent = (item: FieldItem) => {
+  const block = FORM_ITEMS[item.type];
+  if (!block) throw new Error(`Unknown block type: ${item.type}`)
+  return block
+}
+const onUpdateItem = (name: string, updatedItem: any) => {
+  if (!$form.schema) return;
+  $form.updateData(name, updatedItem);
+}
+
+const sendData = (values: Record<string, any>) => {
+  // values is the validated form values from vee-validate
+  form.validate().then((result: any) => {
+    if (result.valid) {
+      // console.log('Form submitted successfully:', values);
+      console.log(JSON.parse(JSON.stringify(values)));
+    } else {
+      console.log('Form validation failed:', result.errors);
+    }
+  });
+}
 
 </script>
 
 <template>
-  <h1>{{ $t('hello') }}</h1>
-  <HelloWorld msg="Vite + Vue" />
+  <div v-if="$form.schema" class="px-4 py-10 pb-20 max-w-2xl mx-auto flex flex-col gap-4">
+    <div class="text-3xl font-medium mb-4">
+      {{ $form.schema.label || $t('placeholder.meta.label') }}
+    </div>
+    <div v-if="$form.schema.description" class="text-xl mb-4">
+      {{ $form.schema.description }}
+    </div>
+
+    <Form @submit="sendData" @input="onChange" :validation-schema="validationSchema" class="w-full flex flex-col gap-4" >
+      <div v-for="element in $form.schema.items" :key="element.name" class="w-full flex flex-col gap-4">
+        <component 
+          :is="getComponent(element)" 
+          v-bind="element" 
+          @update="onUpdateItem(element.name, $event)" 
+        />
+      </div>
+      <Button 
+        class="mt-6 mx-auto text-lg py-6 w-full max-w-sm" 
+        size="lg" 
+        type="submit"
+      >
+        {{ $t('common.submit') }}
+      </Button>
+    </Form>
+  </div>
+  <div v-else class="flex-center h-[70vh]">
+    <span class="text-foreground/50">{{ $t('common.loading') }}</span>
+  </div>
 </template>

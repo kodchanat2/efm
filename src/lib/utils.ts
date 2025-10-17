@@ -2,6 +2,7 @@ import type { BuilderItem, FieldItem } from "@/types"
 import type { ClassValue } from "clsx"
 import { clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import z from "zod"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -29,4 +30,22 @@ export function generateFieldName(items: FieldItem[], baseName: string): string 
   } while (items.find(item => item.name === newName));
 
   return newName;
+}
+
+export function generateValidateSchema(items: FieldItem[]) {
+  const shape: Record<string, any> = {};
+  items.forEach(item => {
+    let rules = z.string();
+    if (item.rules.required) {
+      rules = z.string().nonempty();
+    }
+    if (item.rules.minLength) {
+      rules = rules.min(item.rules.minLength);
+    }
+    if (item.rules.maxLength) {
+      rules = rules.max(item.rules.maxLength);
+    }
+    shape[item.name] = rules;
+  });
+  return z.object(shape);
 }

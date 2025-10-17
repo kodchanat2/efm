@@ -33,7 +33,7 @@ onMounted(() => {
   const id = route.params.id
   if(id) {
     $db.getAll().then((data) => { // Ensure data is loaded
-      console.log(data);
+      // console.log(data);
       const form = data.find(f => f.id === id)
       if (!form) {
         console.error('Form not found')
