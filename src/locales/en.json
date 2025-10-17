@@ -19,6 +19,10 @@
       "export": {
         "title": "Export Form Schema",
         "description": "Copy the JSON schema of your form below."
+      },
+      "share": {
+        "title": "Share Form Link",
+        "description": "Copy the link below to share your form with others."
       }
     },
     "item": {

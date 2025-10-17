@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { useBuilderStore } from '@/stores/builder';
 import { Icon } from '@iconify/vue';
 import ExportModal from './ExportModal.vue';
+import ShareModal from './ShareModal.vue';
 
 const $builder = useBuilderStore();
 </script>
@@ -28,10 +29,12 @@ const $builder = useBuilderStore();
         </Button>
       </ExportModal>
 
-      <Button variant="ghost" size="sm" disabled>
-        <Icon icon="ic:outline-share" />
-        <span class="hidden sm:inline">{{ $t('common.share') }}</span>
-      </Button>
+      <ShareModal>
+        <Button variant="ghost" size="sm" :disabled="!$builder.schema?.id">
+          <Icon icon="ic:outline-share" />
+          <span class="hidden sm:inline">{{ $t('common.share') }}</span>
+        </Button>
+      </ShareModal>
       <Separator orientation="vertical" class="bg-muted-foreground" />
       <Button type="button" :disabled="!$builder.hasUnsavedChanges" @click="$builder.saveSchema">
         <Icon icon="ic:baseline-save" />
