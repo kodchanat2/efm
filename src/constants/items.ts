@@ -3,7 +3,7 @@ import * as Field from "@/components/form/field";
 import type { BuilderItem, FieldType } from "@/types";
 import z from "zod";
 
-export type BuilderType = "simple_input" | "simple_choice" | "simple_select"
+export type BuilderType = "simple_input" | "simple_number" | "simple_choice" | "simple_select"
 
 const simple_input: BuilderItem = {
   type: "simple_input",
@@ -21,6 +21,27 @@ const simple_input: BuilderItem = {
     'required': () => z.string().nonempty(),
     'minlen': (prev: any, val: number) => z.intersection(prev, z.string().min(val)),
     'maxlen': (prev: any, val: number) => z.intersection(prev, z.string().max(val)),
+  }
+};
+
+const simple_number: BuilderItem = {
+  type: "simple_number",
+  icon: "twemoji:input-numbers",
+  component: Block.NumberBlock,
+  props: {
+    type: "Number",
+  },
+  rules: [
+    { key: 'min', props: {type: 'number'} },
+    { key: 'max', props: {type: 'number'} },
+    { key: 'digit', props: {type: 'number', min: 0} },
+  ],
+  validate: {
+    default: () => z.number().nullable().optional(),
+    'required': () => z.number(),
+    'min': (prev: any, val: number) => z.intersection(prev, z.number().gte(val)),
+    'max': (prev: any, val: number) => z.intersection(prev, z.number().lte(val)),
+    'digit': (prev: any, val: number) => z.intersection(prev, z.number().multipleOf(10 ** -val)),
   }
 };
 
@@ -54,12 +75,14 @@ const simple_select: BuilderItem = {
 
 export const BUILDER_ITEMS: BuilderItem[] = [
   simple_input,
+  simple_number,
   simple_choice,
   simple_select
 ];
 
 export const FORM_ITEMS: Partial<Record<FieldType, any>> = {
   "Text": Field.TextField,
+  "Number": Field.NumberField,
 }
 
 export const CONDS = {

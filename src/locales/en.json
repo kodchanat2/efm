@@ -32,6 +32,7 @@
       "max": "Maximum",
       "minlen": "min length",
       "maxlen": "max length",
+      "digit": "decimal",
       "visible": "Visible condition",
       "enable": "Enable condition",
       "field": "select field",
@@ -40,6 +41,7 @@
     },
     "item": {
       "simple_input": "Text Input",
+      "simple_number": "Number Input",
       "simple_choice": "Choice Question",
       "simple_select": "Dropdown Question"
     }
