@@ -79,11 +79,29 @@ const simple_select: BuilderItem = {
   }
 };
 
+const simple_checkbox: BuilderItem = {
+  type: "simple_checkbox",
+  icon: "streamline-flex-color:check-square",
+  component: Block.CheckboxBlock,
+  props: {
+    type: "Checkbox",
+    props: {
+      options: []
+    }
+  },
+  rules: [],
+  validate: {
+    default: () => z.string().nullable().optional(),
+    'required': () => z.string().nonempty(),
+  }
+};
+
 export const BUILDER_ITEMS: BuilderItem[] = [
   simple_input,
   simple_number,
   simple_choice,
   simple_select,
+  simple_checkbox,
 ];
 
 export const FORM_ITEMS: Partial<Record<FieldType, any>> = {
@@ -91,6 +109,7 @@ export const FORM_ITEMS: Partial<Record<FieldType, any>> = {
   "Number": Field.NumberField,
   "Select": Field.SelectField,
   "Radio": Field.RadioField,
+  "Checkbox": Field.CheckboxField,
 }
 
 export const CONDS = {

@@ -42,8 +42,9 @@
     "item": {
       "simple_input": "Text Input",
       "simple_number": "Number Input",
-      "simple_choice": "Choice Question",
-      "simple_select": "Select Question"
+      "simple_choice": "Choice Selection",
+      "simple_select": "Select Question",
+      "simple_checkbox": "Multiple Choice"
     }
   },
   "placeholder": {
