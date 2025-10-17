@@ -3,7 +3,7 @@ import * as Field from "@/components/form/field";
 import type { BuilderItem, FieldType } from "@/types";
 import z from "zod";
 
-export type BuilderType = "simple_input" | "simple_number" | "simple_choice" | "simple_select"
+export type BuilderType = "simple_input" | "simple_number" | "simple_choice" | "simple_checkbox" | "simple_select"
 
 const simple_input: BuilderItem = {
   type: "simple_input",
@@ -48,9 +48,12 @@ const simple_number: BuilderItem = {
 const simple_choice: BuilderItem = {
   type: "simple_choice",
   icon: "streamline-color:bullet-list-flat",
-  component: Block.TextBlock,
+  component: Block.RadioBlock,
   props: {
     type: "Radio",
+    props: {
+      options: []
+    }
   },
   rules: [],
   validate: {
@@ -80,13 +83,14 @@ export const BUILDER_ITEMS: BuilderItem[] = [
   simple_input,
   simple_number,
   simple_choice,
-  simple_select
+  simple_select,
 ];
 
 export const FORM_ITEMS: Partial<Record<FieldType, any>> = {
   "Text": Field.TextField,
   "Number": Field.NumberField,
   "Select": Field.SelectField,
+  "Radio": Field.RadioField,
 }
 
 export const CONDS = {
