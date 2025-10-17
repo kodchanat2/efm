@@ -35,6 +35,13 @@
       "label":"Untitled Form"
     },
     "question": "please enter your question",
+    "description": "description (optional)",
     "text": ""
+  },
+  "form": {
+    "required": "Required",
+    "settings": "Settings",
+    "duplicate": "Duplicate",
+    "delete": "Delete"
   }
 }
