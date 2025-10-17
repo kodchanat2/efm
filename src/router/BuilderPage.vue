@@ -7,7 +7,7 @@ import { useForm } from 'vee-validate'
 import * as z from 'zod'
 import { useRoute } from 'vue-router'
 import { useBuilderStore } from '@/stores/builder'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import type { FieldItem } from '@/types'
 import { BUILDER_ITEMS } from '@/constants/items'
 import { generateFieldName } from '@/lib/utils'
@@ -30,6 +30,18 @@ onMounted(() => {
   const id = route.params.id
   $builder.loadSchema(typeof id === 'string' ? id : undefined)
 })
+
+watch(
+  () => $builder.schema,
+  (newSchema) => {
+    if (newSchema) {
+      form.setValues({
+        label: newSchema.label || '',
+      })
+    }
+  },
+  { immediate: true }
+)
 
 const form = useForm({
   validationSchema: formSchema,
@@ -62,8 +74,8 @@ const deleteItem = (index: number) => {
 </script>
 
 <template>
-  <div class="px-4 py-10 pb-20 max-w-2xl mx-auto flex flex-col gap-4">
-    <form @change="onChange" @input="onChange">
+  <div v-if="$builder.schema" class="px-4 py-10 pb-20 max-w-2xl mx-auto flex flex-col gap-4">
+    <form @change="onChange" @input="onChange" >
       <FormField v-slot="{ componentField }" name="label">
         <FormItem v-auto-animate>
           <FormControl>
@@ -110,5 +122,8 @@ const deleteItem = (index: number) => {
     </div>
 
     <ActionPanel />
+  </div>
+  <div v-else class="flex-center h-[70vh]">
+    <span class="text-foreground/50">{{ $t('common.loading') }}</span>
   </div>
 </template>

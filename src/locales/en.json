@@ -52,6 +52,7 @@
     "import": "Import",
     "share": "Share",
     "create": "Create",
-    "save": "Save"
+    "save": "Save",
+    "loading": "Loading..."
   }
 }
