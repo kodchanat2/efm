@@ -12,18 +12,21 @@ import { Icon } from "@iconify/vue";
 import { BUILDER_ITEMS } from "@/constants/items";
 import { useBuilderStore } from "@/stores/builder";
 import { builderToField, generateFieldName } from "@/lib/utils";
+import { ref } from "vue";
 
 const $builder = useBuilderStore();
+const open = ref(false);
 
 function selectItem(item: BuilderItem) {
   const fieldName = generateFieldName([...$builder.items], item.props.type);
   const fieldItem = builderToField(item, fieldName);
   $builder.addItem(fieldItem);
+  open.value = false;
 }
 </script>
 
 <template>
-  <Dialog>
+  <Dialog v-model:open="open">
     <DialogTrigger as-child>
       <slot></slot>
     </DialogTrigger>
