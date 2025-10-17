@@ -35,6 +35,11 @@ export type BuilderItem = {
   img?: string
   component: any
   rules: RuleSetting[]
+  validate: {
+    default: () => any
+    'required': () => any
+    [key: string]: (prev:any, val: any) => any
+  }
   props: Partial<FieldItem> & { type: FieldType }
 }
 

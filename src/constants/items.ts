@@ -1,6 +1,7 @@
 import * as Block from "@/components/builder/block";
 import * as Field from "@/components/form/field";
 import type { BuilderItem, FieldType } from "@/types";
+import z from "zod";
 
 export type BuilderType = "simple_input" | "simple_choice" | "simple_select"
 
@@ -14,7 +15,13 @@ const simple_input: BuilderItem = {
   rules: [
     { key: 'minlen', props: {type: 'number', min: 0} },
     { key: 'maxlen', props: {type: 'number', min: 1} },
-  ]
+  ],
+  validate: {
+    default: () => z.string(),
+    'required': () => z.string().nonempty(),
+    'minlen': (prev: any, val: number) => z.intersection(prev, z.string().min(val)),
+    'maxlen': (prev: any, val: number) => z.intersection(prev, z.string().max(val)),
+  }
 };
 
 const simple_choice: BuilderItem = {
@@ -24,7 +31,11 @@ const simple_choice: BuilderItem = {
   props: {
     type: "Radio",
   },
-  rules: []
+  rules: [],
+  validate: {
+    default: () => z.string().nullable().optional(),
+    'required': () => z.string().nonempty(),
+  }
 };
 
 const simple_select: BuilderItem = {
@@ -34,7 +45,11 @@ const simple_select: BuilderItem = {
   props: {
     type: "Select",
   },
-  rules: []
+  rules: [],
+  validate: {
+    default: () => z.string().nullable().optional(),
+    'required': () => z.string().nonempty(),
+  }
 };
 
 export const BUILDER_ITEMS: BuilderItem[] = [

@@ -21,7 +21,7 @@ const $db = useFirestore<Schema>('forms')
 const fieldList = computed(() => ($form.schema?.items || []).filter((item: FieldItem) => {
   // Check visibility conditions
   if(!item.visible) return true;
-  if (checkCond('visible', item, $form.data) === 1) return true;
+  if (checkCond('visible', item, form.values) === 1) return true;
   return false
 }))
 
@@ -36,12 +36,21 @@ onMounted(() => {
         return
       }
       $form.loadSchema(scm)
-      validationSchema.value = toTypedSchema(generateValidateSchema(scm.items))
     })
   } else {
     router.push({ name: 'NotFound' })
   }
 })
+
+watch(
+  () => $form.schema,
+  (newSchema) => {
+    if (newSchema) {
+      validationSchema.value = toTypedSchema(generateValidateSchema(newSchema.items))
+    }
+  },
+  { deep: true }
+)
 
 const onChange = () => {
   // console.log('Form changed!', form.values)
@@ -54,11 +63,13 @@ const getComponent = (item: FieldItem) => {
 }
 const onUpdateItem = (name: string, updatedItem: any) => {
   if (!$form.schema) return;
-  $form.updateData(name, updatedItem);
+  // $form.updateData(name, updatedItem);
+  form.setFieldValue(name, updatedItem);
 }
 
 const sendData = (values: Record<string, any>) => {
-  // values is the validated form values from vee-validate
+  // console.log('object', values, $form.data);
+  // form.setValues($form.data);
   form.validate().then((result: any) => {
     if (result.valid) {
       // console.log('Form submitted successfully:', values);
@@ -66,6 +77,8 @@ const sendData = (values: Record<string, any>) => {
     } else {
       console.log('Form validation failed:', result.errors);
     }
+  }).catch((err) => {
+    console.error('Error during form submission:', err);
   });
 }
 
@@ -92,6 +105,7 @@ const sendData = (values: Record<string, any>) => {
         class="mt-6 mx-auto text-lg py-6 w-full max-w-sm" 
         size="lg" 
         type="submit"
+        @click.prevent="sendData(form.values)"
       >
         {{ $t('common.submit') }}
       </Button>

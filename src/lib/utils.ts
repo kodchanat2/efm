@@ -1,4 +1,4 @@
-import { CONDS } from "@/constants/items"
+import { BUILDER_ITEMS, CONDS } from "@/constants/items"
 import type { BuilderItem, FieldItem } from "@/types"
 import type { ClassValue } from "clsx"
 import { clsx } from "clsx"
@@ -36,19 +36,20 @@ export function generateFieldName(items: FieldItem[], baseName: string): string 
 export function generateValidateSchema(items: FieldItem[]) {
   const shape: Record<string, any> = {};
   items.forEach(item => {
-    let rules:any = z.string();
+    const validator = BUILDER_ITEMS.find(bItem => bItem.type === item.builder.type)?.validate;
+    if (!validator) return;
+    const { default: defaultValidator, required, ...moreValidator } = validator;
+    let rules:any = defaultValidator();
     if (!item.rules.required) {
-      rules = rules.nullable().optional();
+      rules = required();
     }
-    else {
-      rules = rules.min(1);
-    }
-    if (item.rules.minlen) {
-      rules = rules.min(item.rules.minlen);
-    }
-    if (item.rules.maxlen) {
-      rules = rules.max(item.rules.maxlen);
-    }
+  // console.log('start', item.rules);
+      Object.keys(moreValidator).forEach(ruleKey => {
+      const fn = moreValidator[ruleKey];
+      if (item.rules[ruleKey] !== undefined && item.rules[ruleKey] !== null && typeof fn === 'function') {
+        rules = fn(rules, item.rules[ruleKey]);
+      }
+    });
     shape[item.name] = rules;
   });
   return z.object(shape);
