@@ -29,6 +29,11 @@ export const useBuilderStore = defineStore('builder', {
       if (!this.schema) return;
       this.schema.items.push(item);
     },
+    setItems(items: FieldItem[]) {
+      if (!this.schema) return;
+      this.schema.items = items;
+      console.log(this.schema.items);
+    },
     saveSchema() {
       this.oldSchema = JSON.parse(JSON.stringify(this.schema));
       console.log(this.oldSchema);

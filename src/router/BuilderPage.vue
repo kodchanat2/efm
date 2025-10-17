@@ -7,14 +7,21 @@ import { useForm } from 'vee-validate'
 import * as z from 'zod'
 import { useRoute } from 'vue-router'
 import { useBuilderStore } from '@/stores/builder'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import draggable from "vuedraggable";
 
 const route = useRoute()
 const $builder = useBuilderStore()
-
 const formSchema = toTypedSchema(z.object({
   label: z.string().max(50),
 }))
+const list = computed({
+  get: () => $builder.items || [],
+  set: (val) => {
+    // console.log(val);
+    $builder.setItems(val)
+  }
+})
 
 onMounted(() => {
   const id = route.params.id
@@ -33,7 +40,7 @@ const onChange = () => {
 </script>
 
 <template>
-  <div class="px-4 py-10 max-w-2xl mx-auto flex flex-col gap-4">
+  <div class="px-4 py-10 pb-20 max-w-2xl mx-auto flex flex-col gap-4">
     <form @change="onChange" @input="onChange">
       <FormField v-slot="{ componentField }" name="label">
         <FormItem v-auto-animate>
@@ -49,6 +56,25 @@ const onChange = () => {
         </FormItem>
       </FormField>
     </form>
+
+    <draggable
+      class="flex flex-col gap-4"
+      :component-data="{
+        tag: 'div',
+        type: 'transition-group',
+        name: 'sort'
+      }"
+      v-model="list"
+      v-bind="{
+        animation: 200,
+        ghostClass: 'opacity-30',
+      }"
+      handle=".handle"
+      item-key="name"
+    >
+      <template #item="{ element, index }">
+      </template>
+    </draggable>
 
     <ActionPanel />
   </div>

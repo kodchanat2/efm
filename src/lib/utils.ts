@@ -13,6 +13,7 @@ export function builderToField(item: BuilderItem, name: string): FieldItem {
     builder: {
       type: item.type
     },
+    rules: {},
     name: name,
     layout: item.props?.layout || "Normal",
   }
