@@ -20,6 +20,7 @@ const $builder = useBuilderStore()
 const $db = useFirestore<Schema>('forms')
 const formSchema = toTypedSchema(z.object({
   label: z.string().max(50),
+  description: z.string().max(200).optional().nullable(),
 }))
 const list = computed({
   get: () => $builder.items || [],
@@ -55,6 +56,7 @@ watch(
     if (newSchema) {
       form.setValues({
         label: newSchema.label || '',
+        description: newSchema.description || '',
       })
     }
   },
@@ -99,8 +101,22 @@ const deleteItem = (index: number) => {
           <FormControl>
             <Input 
               type="text" 
-              class="input-header text-2xl!" 
+              class="input-header text-3xl!" 
               :placeholder="$t('placeholder.meta.label')" 
+              v-bind="componentField" 
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <FormField v-slot="{ componentField }" name="description">
+        <FormItem v-auto-animate class="my-4">
+          <FormControl>
+            <Input 
+              type="text" 
+              class="input-header text-foreground/70 text-lg!" 
+              :placeholder="$t('placeholder.meta.description')" 
               v-bind="componentField" 
             />
           </FormControl>

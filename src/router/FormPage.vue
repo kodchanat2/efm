@@ -89,7 +89,7 @@ const sendData = (values: Record<string, any>) => {
     <div class="text-3xl font-medium mb-4">
       {{ $form.schema.label || $t('placeholder.meta.label') }}
     </div>
-    <div v-if="$form.schema.description" class="text-xl mb-4">
+    <div v-if="$form.schema.description" class="text-xl opacity-70 -mt-4 mb-4">
       {{ $form.schema.description }}
     </div>
 

@@ -46,7 +46,8 @@
   },
   "placeholder": {
     "meta": {
-      "label":"Untitled Form"
+      "label":"Untitled Form",
+      "description":"Form description (optional)"
     },
     "question": "please enter your question",
     "description": "description (optional)",
