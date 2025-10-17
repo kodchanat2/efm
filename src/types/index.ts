@@ -14,7 +14,9 @@ export type FieldItem = {
   type: FieldType
   description?: string
   placeholder?: string
-  rules?: string[]
+  rules: {
+    [key: string]: any
+  }
   builder: {
     type: BuilderType
   }
@@ -31,5 +33,6 @@ export type BuilderItem = {
   type: BuilderType
   icon?: string
   img?: string
+  component: any
   props: Partial<FieldItem> & { type: FieldType }
 }

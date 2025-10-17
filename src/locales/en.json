@@ -11,6 +11,7 @@
   }
   ,
   "builder": {
+    "empty": "Click 'Add' to start building your form.",
     "actionPanel": {
       "add": {
         "button": "Add",

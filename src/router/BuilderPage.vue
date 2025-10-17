@@ -8,6 +8,8 @@ import * as z from 'zod'
 import { useRoute } from 'vue-router'
 import { useBuilderStore } from '@/stores/builder'
 import { computed, onMounted } from 'vue'
+import type { FieldItem } from '@/types'
+import { BUILDER_ITEMS } from '@/constants/items'
 import { generateFieldName } from '@/lib/utils'
 import draggable from "vuedraggable";
 
@@ -36,6 +38,12 @@ const form = useForm({
 const onChange = () => {
   // console.log('Form changed!', form.values)
   $builder.updateMeta(form.values)
+}
+
+const getComponent = (item: FieldItem) => {
+  const block = BUILDER_ITEMS.find(b => b.props.type === item.type)
+  if (!block) throw new Error(`Unknown block type: ${item.type}`)
+  return block.component
 }
 
 const onUpdateItem = (index: number, value: { [key: string]: any }) => {
@@ -87,8 +95,19 @@ const deleteItem = (index: number) => {
       item-key="name"
     >
       <template #item="{ element, index }">
+        <component 
+          :is="getComponent(element)" 
+          v-bind="element" 
+          @update="onUpdateItem(index, $event)" 
+          @duplicate="duplicateItem(index)"
+          @delete="deleteItem(index)"
+        />
       </template>
     </draggable>
+
+    <div v-if="!list.length" class="text-center text-foreground/50 italic">
+      {{ $t('builder.empty') }}
+    </div>
 
     <ActionPanel />
   </div>
