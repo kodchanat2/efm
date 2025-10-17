@@ -5,11 +5,11 @@ import * as z from 'zod'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, watch, computed, ref } from 'vue'
 import type { FieldItem, Schema } from '@/types'
-import { FORM_ITEMS } from '@/constants/items'
+import { CONDS, FORM_ITEMS } from '@/constants/items'
 import { useFirestore } from '@/composables/useFirestore'
 import { useFormStore } from '@/stores/form'
 import { Button } from '@/components/ui/button'
-import { generateValidateSchema } from '@/lib/utils'
+import { checkCond, generateValidateSchema } from '@/lib/utils'
 
 const route = useRoute()
 const router = useRouter()
@@ -17,6 +17,13 @@ const form = useForm()
 const validationSchema = ref<any>(null)
 const $form = useFormStore()
 const $db = useFirestore<Schema>('forms')
+
+const fieldList = computed(() => ($form.schema?.items || []).filter((item: FieldItem) => {
+  // Check visibility conditions
+  if(!item.visible) return true;
+  if (checkCond('visible', item, $form.data) === 1) return true;
+  return false
+}))
 
 onMounted(() => {
   const id = route.params.id
@@ -73,8 +80,8 @@ const sendData = (values: Record<string, any>) => {
       {{ $form.schema.description }}
     </div>
 
-    <Form @submit="sendData" @input="onChange" :validation-schema="validationSchema" class="w-full flex flex-col gap-4" >
-      <div v-for="element in $form.schema.items" :key="element.name" class="w-full flex flex-col gap-4">
+    <Form v-auto-animate @submit="sendData" @input="onChange" :validation-schema="validationSchema" class="w-full flex flex-col gap-4" >
+      <div v-for="element in fieldList" :key="element.name" class="w-full flex flex-col gap-4">
         <component 
           :is="getComponent(element)" 
           v-bind="element" 
