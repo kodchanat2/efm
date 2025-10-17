@@ -62,14 +62,17 @@ const simple_choice: BuilderItem = {
 const simple_select: BuilderItem = {
   type: "simple_select",
   icon: "streamline-plump-color:drop-down-menu-flat",
-  component: Block.TextBlock,
+  component: Block.SelectBlock,
   props: {
     type: "Select",
+    props: {
+      options: []
+    }
   },
   rules: [],
   validate: {
     default: () => z.string().nullable().optional(),
-    'required': () => z.string().nonempty(),
+    'required': () => z.string().min(1),
   }
 };
 
@@ -83,6 +86,7 @@ export const BUILDER_ITEMS: BuilderItem[] = [
 export const FORM_ITEMS: Partial<Record<FieldType, any>> = {
   "Text": Field.TextField,
   "Number": Field.NumberField,
+  "Select": Field.SelectField,
 }
 
 export const CONDS = {

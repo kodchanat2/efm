@@ -43,7 +43,7 @@
       "simple_input": "Text Input",
       "simple_number": "Number Input",
       "simple_choice": "Choice Question",
-      "simple_select": "Dropdown Question"
+      "simple_select": "Select Question"
     }
   },
   "placeholder": {
@@ -53,7 +53,9 @@
     },
     "question": "please enter your question",
     "description": "description (optional)",
-    "text": ""
+    "text": "",
+    "value": "display text",
+    "key": "value"
   },
   "form": {
     "required": "Required",

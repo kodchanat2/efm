@@ -70,7 +70,7 @@ function setCond(key: typeof condKeys[number], del?: boolean) {
           </div>
 
            <!-- rules config (minLength, maxLength) -->
-           <Label class="-mb-2">{{ $t('builder.settings.rules') }}</Label>
+           <Label v-if="rules.length" class="-mb-2">{{ $t('builder.settings.rules') }}</Label>
            <div class="grid grid-cols-4 gap-2">
             <template v-for="rule in rules" :key="rule.key">
               <div class="flex flex-col gap-1">
