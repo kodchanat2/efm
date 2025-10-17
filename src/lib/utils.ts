@@ -35,9 +35,12 @@ export function generateFieldName(items: FieldItem[], baseName: string): string 
 export function generateValidateSchema(items: FieldItem[]) {
   const shape: Record<string, any> = {};
   items.forEach(item => {
-    let rules = z.string();
-    if (item.rules.required) {
-      rules = z.string().nonempty();
+    let rules:any = z.string();
+    if (!item.rules.required) {
+      rules = rules.nullable().optional();
+    }
+    else {
+      rules = rules.min(1);
     }
     if (item.rules.minLength) {
       rules = rules.min(item.rules.minLength);
