@@ -57,7 +57,7 @@ export const useBuilderStore = defineStore('builder', {
       // console.log(this.oldSchema);
       if(this.schema?.id) {
         // Update existing
-        await $db.update(this.schema.id, this.schema);
+        await $db.update(this.schema.id, JSON.parse(JSON.stringify(this.schema)));
       } else {
         // Create new
         const id = await $db.create(this.schema);

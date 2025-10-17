@@ -7,11 +7,11 @@ import type { FieldItem } from '@/types';
 const props = defineProps<FieldItem>();
 
 const emits = defineEmits<{
-  (e: 'update', value: { [key: string]: any }): void;
+  (e: 'update', value: any ): void;
 }>();
 
 const onInput = (value: string) => {
-  emits('update', { [props.name]: value });
+  emits('update', value);
 };
 
 </script>

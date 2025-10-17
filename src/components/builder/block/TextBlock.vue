@@ -22,12 +22,6 @@ const emits = defineEmits<{
 const onInput = (key: keyof FieldItem, value: any) => {
   emits('update', { [key]: value });
 };
-const rules = computed({
-  get: () => props.rules,
-  set: (val) => {
-    emits('update', { rules: JSON.stringify({ ...props.rules, ...val }) });
-  }
-})
 
 </script>
 

@@ -23,8 +23,8 @@ export type FieldItem = {
   layout: string
   props?: any
   default?: any
-  visible?: [string, string, string][]
-  enable?: [string, string, string][]
+  visible?: [string, string, string]
+  enable?: [string, string, string]
 }
 
 export type FieldType = "Text" | "Number" | "Email" | "Password" | "Textarea" | "Select" | "Radio" | "Checkbox" | "Date" | "Time" | "File" | "Color" | "Range" | "Switch" | "Rating" | "Slider"
