@@ -1,4 +1,5 @@
 import { useFirestore } from "@/composables/useFirestore";
+import { saveRecentForm } from "@/lib/utils";
 import type { FieldItem, Schema } from "@/types";
 import { defineStore } from "pinia";
 import { toast } from "vue3-toastify";
@@ -21,9 +22,10 @@ export const useBuilderStore = defineStore('builder', {
       console.log('init');
       if(data?.id) { // Fetch from backend
         this.saved = true;
+        saveRecentForm(data.id);
       }
       if (data) {
-          this.schema = data;
+        this.schema = data;
       } else { // Initialize new schema
         this.schema = { items: [] };
       }
@@ -64,6 +66,7 @@ export const useBuilderStore = defineStore('builder', {
       this.oldSchema = JSON.parse(JSON.stringify(this.schema));
       window.history.replaceState({ schema: JSON.stringify(this.schema) }, '', '/builder/' + this.schema.id);
       this.saved = true;
+      saveRecentForm(this.schema.id!);
       await $db.getAll();
       toast.update(toastId, { render: 'Saved!', type: 'success', isLoading: false, autoClose: 1000 });
     }

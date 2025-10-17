@@ -1,30 +1,45 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@iconify/vue'
 import ImportModal from '@/components/landing/ImportModal.vue'
+import { useFirestore } from '@/composables/useFirestore'
+import type { Schema } from '@/types'
 
 const router = useRouter()
 const { t } = useI18n()
+const $db = useFirestore<Schema>('forms')
+const recentForms = ref<{ id: string; name: string }[]>([])
 
-const recentForms = ref<{ id: number; name: string }[]>([])
-
-// Placeholder: try to read recent from localStorage
-try {
-  const raw = localStorage.getItem('recentForms')
-  if (raw) recentForms.value = JSON.parse(raw)
-} catch (e) {
-  /* ignore */
-}
+onMounted(() => {
+  // Load recent forms from localStorage
+  try {
+    const raw = localStorage.getItem('lastSchema')
+    // console.log(raw);
+    if (raw) {
+      $db.getAll().then((data) => {
+        recentForms.value = raw.split(',').map(id => {
+          const form = data.find(f => f.id === id)
+          return {
+            id,
+            name: form?.label || form?.name || `Form ${id}`
+          }
+        })
+      })
+    }
+  } catch (e) {
+    /* ignore */
+  }
+})
 
 function createNewForm() {
   router.push({ name: 'builder' })
 }
 
-function openForm(f: { id: number }) {
-  router.push({ name: 'form', params: { id: String(f.id) } })
+function openForm(f: { id: string }) {
+  router.push({ name: 'builder', params: { id: f.id } })
 }
 </script>
 
@@ -54,7 +69,7 @@ function openForm(f: { id: number }) {
 
         <ul class="mt-4 space-y-2 h-56">
           <li v-for="f in recentForms" :key="f.id">
-            <button @click="openForm(f)" class="w-full text-left px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">{{ f.name }}</button>
+            <Button @click="openForm(f)" variant="link" size="lg">{{ f.name }}</Button>
           </li>
           <li v-if="!recentForms.length" class="text-sm text-gray-500">{{ t('landing.feature.recent.empty') }}</li>
         </ul>

@@ -49,3 +49,12 @@ export function generateValidateSchema(items: FieldItem[]) {
   });
   return z.object(shape);
 }
+
+export function saveRecentForm(formId: string) {
+  const lastSchema = (localStorage.getItem('lastSchema') || '').split(',');
+  if (lastSchema.includes(formId)) {
+    lastSchema.splice(lastSchema.indexOf(formId), 1);
+  }
+  lastSchema.push(formId);
+  localStorage.setItem('lastSchema', lastSchema.filter(id => !!id).join(','));
+}

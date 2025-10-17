@@ -93,7 +93,7 @@ const deleteItem = (index: number) => {
 
 <template>
   <div v-if="$builder.schema" class="px-4 py-10 pb-20 max-w-2xl mx-auto flex flex-col gap-4">
-    <form @change="onChange" @input="onChange" >
+    <form @submit="e=>e.preventDefault()" @change="onChange" @input="onChange" >
       <FormField v-slot="{ componentField }" name="label">
         <FormItem v-auto-animate>
           <FormControl>
