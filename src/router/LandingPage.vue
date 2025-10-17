@@ -46,6 +46,7 @@ function openForm(f: { id: string }) {
 <template>
   <div class="mx-auto w-full max-w-6xl px-6 py-10">
     <div class="flex-center flex-col gap-2">
+      <img src="../assets/efm.png" class="h-10" alt="logo" />
       <h1 class="text-2xl sm:text-3xl font-semibold">{{ t('landing.title') }}</h1>
       <p class="text-sm text-foreground/70">{{ t('landing.subtitle') }}</p>
     </div>
