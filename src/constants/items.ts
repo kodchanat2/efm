@@ -1,5 +1,6 @@
 import * as Block from "@/components/builder/block";
-import type { BuilderItem } from "@/types";
+import * as Field from "@/components/form/field";
+import type { BuilderItem, FieldType } from "@/types";
 
 export type BuilderType = "simple_input" | "simple_choice" | "simple_select"
 
@@ -35,3 +36,7 @@ export const BUILDER_ITEMS: BuilderItem[] = [
   simple_choice,
   simple_select
 ];
+
+export const FORM_ITEMS: Partial<Record<FieldType, any>> = {
+  "Text": Field.TextField,
+}
