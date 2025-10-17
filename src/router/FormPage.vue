@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
 import { Form, useForm } from 'vee-validate'
-import * as z from 'zod'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, watch, computed, ref } from 'vue'
 import type { FieldItem, Schema } from '@/types'
-import { CONDS, FORM_ITEMS } from '@/constants/items'
+import { FORM_ITEMS } from '@/constants/items'
 import { useFirestore } from '@/composables/useFirestore'
 import { useFormStore } from '@/stores/form'
 import { Button } from '@/components/ui/button'
