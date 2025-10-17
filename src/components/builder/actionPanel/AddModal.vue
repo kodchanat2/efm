@@ -32,9 +32,9 @@ function selectItem(item: BuilderItem) {
     </DialogTrigger>
     <DialogContent class="sm:max-w-md grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
       <DialogHeader class="p-6 pb-0">
-        <DialogTitle>{{ $t('builder.actionPanel.add.modal.title') }}</DialogTitle>
+        <DialogTitle>{{ $t('builder.actionPanel.add.title') }}</DialogTitle>
         <DialogDescription>
-          {{ $t('builder.actionPanel.add.modal.description') }}
+          {{ $t('builder.actionPanel.add.description') }}
         </DialogDescription>
       </DialogHeader>
       <div class="grid gap-4 py-4 overflow-y-auto px-6">

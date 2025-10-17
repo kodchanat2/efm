@@ -20,12 +20,12 @@ const { text, copy, copied, isSupported } = useClipboard({ source: JSON.stringif
     <DialogTrigger as-child>
       <slot></slot>
     </DialogTrigger>
-    <DialogContent class="sm:max-w-lg grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+    <DialogContent class="sm:max-w-lg grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[80dvh]">
       <DialogHeader class="p-6 pb-0">
-        <DialogTitle>{{ $t('builder.actionPanel.export.modal.title') }}</DialogTitle>
+        <DialogTitle>{{ $t('builder.actionPanel.export.title') }}</DialogTitle>
         <DialogDescription>
           <div class="flex justify-between items-center">
-            {{ $t('builder.actionPanel.export.modal.description') }}
+            {{ $t('builder.actionPanel.export.description') }}
             <div v-if="isSupported">
               <Button size="sm" @click="copy(JSON.stringify($builder.schema))">
                 {{ $t(`common.${copied ? 'copied' : 'copy'}`) }}

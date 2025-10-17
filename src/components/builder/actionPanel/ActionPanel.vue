@@ -15,7 +15,7 @@ const $builder = useBuilderStore();
       <AddModal>
         <Button variant="outline">
           <Icon icon="ic:outline-add-box" />
-          {{ $t('builder.actionPanel.add.button') }}
+          {{ $t('common.add') }}
         </Button>
       </AddModal>
     </div>
@@ -24,18 +24,18 @@ const $builder = useBuilderStore();
       <ExportModal>
         <Button variant="ghost" size="sm">
           <Icon icon="mdi:export-variant" />
-          <span class="hidden sm:inline">{{ $t('builder.actionPanel.export.button') }}</span>
+          <span class="hidden sm:inline">{{ $t('common.export') }}</span>
         </Button>
       </ExportModal>
 
       <Button variant="ghost" size="sm" disabled>
         <Icon icon="ic:outline-share" />
-        <span class="hidden sm:inline">{{ $t('builder.actionPanel.share') }}</span>
+        <span class="hidden sm:inline">{{ $t('common.share') }}</span>
       </Button>
       <Separator orientation="vertical" class="bg-muted-foreground" />
       <Button type="button" :disabled="!$builder.hasUnsavedChanges" @click="$builder.saveSchema">
         <Icon icon="ic:baseline-save" />
-        {{ $t(`builder.actionPanel.${$builder.saved ? 'save' : 'create'}`) }}
+        {{ $t(`common.${$builder.saved ? 'save' : 'create'}`) }}
       </Button>
     </div>
 

@@ -8,28 +8,18 @@
       "import": { "title": "Import from JSON", "desc": "Load a form from a JSON file." },
       "recent": { "title": "Recent Forms", "desc": "Open a recently edited form.", "empty": "No recent forms" }
     }
-  }
-  ,
+  },
   "builder": {
     "empty": "Click 'Add' to start building your form.",
     "actionPanel": {
       "add": {
-        "button": "Add",
-        "modal": {
-          "title": "Add New Item",
-          "description": "Select the type of item you want to add."
-        }
+        "title": "Add New Item",
+        "description": "Select the type of item you want to add."
       },
       "export": {
-        "button": "Export",
-        "modal": {
-          "title": "Export Form Schema",
-          "description": "Copy the JSON schema of your form below."
-        }
-      },
-      "share": "Share",
-      "create": "Create",
-      "save": "Save"
+        "title": "Export Form Schema",
+        "description": "Copy the JSON schema of your form below."
+      }
     },
     "item": {
       "simple_input": "Text Input",
@@ -56,6 +46,12 @@
     "confirm": "Confirm",
     "close": "Close",
     "copy": "Copy",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "add": "Add",
+    "export": "Export",
+    "import": "Import",
+    "share": "Share",
+    "create": "Create",
+    "save": "Save"
   }
 }
