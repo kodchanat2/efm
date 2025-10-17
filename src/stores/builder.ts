@@ -5,6 +5,7 @@ export const useBuilderStore = defineStore('builder', {
   state: () => ({
     schema: null as Schema | null,
     oldSchema: null as Schema | null,
+    saved: false,
   }),
   getters: {
     hasUnsavedChanges: (state) => {
@@ -16,7 +17,7 @@ export const useBuilderStore = defineStore('builder', {
     loadSchema(id?: string) {
       console.log('init');
       if(id) { // Fetch from backend
-
+        this.saved = true;
       } else { // Initialize new schema
         this.schema = { items: [] };
       }
@@ -44,6 +45,7 @@ export const useBuilderStore = defineStore('builder', {
     },
     saveSchema() {
       this.oldSchema = JSON.parse(JSON.stringify(this.schema));
+      this.saved = true;
       console.log(this.oldSchema);
     }
   }

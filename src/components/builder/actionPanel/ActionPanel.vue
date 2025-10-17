@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useBuilderStore } from '@/stores/builder';
 import { Icon } from '@iconify/vue';
+import ExportModal from './ExportModal.vue';
 
 const $builder = useBuilderStore();
 </script>
@@ -20,10 +21,12 @@ const $builder = useBuilderStore();
     </div>
 
     <div class="flex items-center gap-2">
-      <Button variant="ghost" size="sm" disabled>
-        <Icon icon="mdi:export-variant" />
-        <span class="hidden sm:inline">{{ $t('builder.actionPanel.export') }}</span>
-      </Button>
+      <ExportModal>
+        <Button variant="ghost" size="sm">
+          <Icon icon="mdi:export-variant" />
+          <span class="hidden sm:inline">{{ $t('builder.actionPanel.export.button') }}</span>
+        </Button>
+      </ExportModal>
 
       <Button variant="ghost" size="sm" disabled>
         <Icon icon="ic:outline-share" />
@@ -32,7 +35,7 @@ const $builder = useBuilderStore();
       <Separator orientation="vertical" class="bg-muted-foreground" />
       <Button type="button" :disabled="!$builder.hasUnsavedChanges" @click="$builder.saveSchema">
         <Icon icon="ic:baseline-save" />
-        {{ $t('builder.actionPanel.create') }}
+        {{ $t(`builder.actionPanel.${$builder.saved ? 'save' : 'create'}`) }}
       </Button>
     </div>
 

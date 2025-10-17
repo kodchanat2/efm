@@ -20,7 +20,13 @@
           "description": "Select the type of item you want to add."
         }
       },
-      "export": "Export",
+      "export": {
+        "button": "Export",
+        "modal": {
+          "title": "Export Form Schema",
+          "description": "Copy the JSON schema of your form below."
+        }
+      },
       "share": "Share",
       "create": "Create",
       "save": "Save"
@@ -44,5 +50,12 @@
     "settings": "Settings",
     "duplicate": "Duplicate",
     "delete": "Delete"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "copy": "Copy",
+    "copied": "Copied!"
   }
 }
