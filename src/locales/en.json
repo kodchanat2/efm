@@ -25,6 +25,17 @@
         "description": "Copy the link below to share your form with others."
       }
     },
+    "settings": {
+      "name": "Field name",
+      "rules": "Validation Rules",
+      "min": "Minimum",
+      "max": "Maximum",
+      "visible": "Visible condition",
+      "enable": "Enable condition",
+      "field": "select field",
+      "cond": "condition",
+      "value": "value"
+    },
     "item": {
       "simple_input": "Text Input",
       "simple_choice": "Choice Question",

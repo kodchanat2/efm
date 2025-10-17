@@ -9,24 +9,30 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import type { FieldItem } from '@/types';
 import { Icon } from '@iconify/vue';
-import { computed } from 'vue';
+import { ref } from 'vue';
+import BlockConfigModal from './BlockConfigModal.vue';
 
 const props = defineProps<FieldItem>();
-
 const emits = defineEmits<{
   (e: 'update', value: { [key: string]: string }): void;
   (e: 'duplicate'): void;
   (e: 'delete'): void;
 }>();
 
+const config = ref(false);
+
 const onInput = (key: keyof FieldItem, value: any) => {
   emits('update', { [key]: value });
+};
+
+const update = (value: { [key: string]: any }) => {
+  emits('update', value);
 };
 
 </script>
 
 <template>
-  <Card class="w-full pt-2 relative">
+  <Card class="w-full pt-2 relative" :class="[config?'border-primary':'']">
     <Icon icon="mdi:drag" class="size-5 handle absolute left-0 top-0 h-full cursor-move hover:bg-secondary/10" />
     <CardContent class="flex flex-col gap-4">
       <Input
@@ -38,7 +44,7 @@ const onInput = (key: keyof FieldItem, value: any) => {
       />
       <Input
         type="text"
-        class="input-header font-normal! pl-1 -mt-4 border-b-0!"
+        class="input-header text-foreground/60 font-normal! pl-1 -mt-4 border-b-0!"
         :placeholder="$t('placeholder.description')"
         :default-value="props.description"
         @input="onInput('description', $event.target.value)"
@@ -73,11 +79,11 @@ const onInput = (key: keyof FieldItem, value: any) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent :align="'end'">
-              <!-- <DropdownMenuItem>
+              <DropdownMenuItem @click="config = true">
                 <Icon icon="ic:outline-settings" class="size-4 mr-2" />
                 {{ $t('form.settings') }}
               </DropdownMenuItem>
-              <DropdownMenuSeparator /> -->
+              <DropdownMenuSeparator />
               <DropdownMenuItem @click="emits('duplicate')">
                 <Icon icon="ic:round-content-copy" class="size-4 mr-2" />
                 {{ $t('form.duplicate') }}
@@ -88,6 +94,11 @@ const onInput = (key: keyof FieldItem, value: any) => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <BlockConfigModal 
+            :open="config" 
+            @update:open="(value) => config = value" :props="props"
+            @update="update"
+          />
         </div>
       </div>
     </CardContent>

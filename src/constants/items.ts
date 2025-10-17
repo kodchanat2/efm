@@ -40,3 +40,12 @@ export const BUILDER_ITEMS: BuilderItem[] = [
 export const FORM_ITEMS: Partial<Record<FieldType, any>> = {
   "Text": Field.TextField,
 }
+
+export const CONDS = {
+  EQ: "==",
+  NEQ: "!=",
+  GT: ">",
+  LT: "<",
+  GTE: ">=",
+  LTE: "<=",
+}
