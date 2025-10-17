@@ -29,6 +29,14 @@ export const useBuilderStore = defineStore('builder', {
       if (!this.schema) return;
       this.schema.items.push(item);
     },
+    updateItem(index: number, value: { [key: string]: any }) {
+      if (!this.schema || !this.schema.items[index]) return;
+      this.schema.items[index] = { ...this.schema.items[index], ...value };
+    },
+    deleteItem(index: number) {
+      if (!this.schema || !this.schema.items[index]) return;
+      this.schema.items.splice(index, 1);
+    },
     setItems(items: FieldItem[]) {
       if (!this.schema) return;
       this.schema.items = items;

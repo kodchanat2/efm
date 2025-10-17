@@ -8,6 +8,7 @@ import * as z from 'zod'
 import { useRoute } from 'vue-router'
 import { useBuilderStore } from '@/stores/builder'
 import { computed, onMounted } from 'vue'
+import { generateFieldName } from '@/lib/utils'
 import draggable from "vuedraggable";
 
 const route = useRoute()
@@ -35,6 +36,19 @@ const form = useForm({
 const onChange = () => {
   // console.log('Form changed!', form.values)
   $builder.updateMeta(form.values)
+}
+
+const onUpdateItem = (index: number, value: { [key: string]: any }) => {
+  $builder.updateItem(index, value)
+}
+const duplicateItem = (index: number) => {
+  const item = $builder.items[index]
+  if (!item) return
+  const name = generateFieldName($builder.items, item.type)
+  $builder.addItem({ ...item, name })
+}
+const deleteItem = (index: number) => {
+  $builder.deleteItem(index)
 }
 
 </script>
